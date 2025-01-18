@@ -7,6 +7,7 @@ import bcrypt from "bcryptjs"; // Changed from crypto to bcryptjs
 import { signIn } from "@/auth";
 import { redirect } from "next/navigation";
 
+
 export const signInWithCredentials = async (params: Pick<AuthCredentials, "email" | "password">) => {
   const { email, password } = params;
 
@@ -27,6 +28,7 @@ export const signInWithCredentials = async (params: Pick<AuthCredentials, "email
   }
 };
 
+
 export const signUp = async (params: AuthCredentials) => {
   const { fullName, email, universityID, password, universityCard } = params;
 
@@ -40,10 +42,10 @@ export const signUp = async (params: AuthCredentials) => {
     return { success: false, error: "User already exists" };
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10); // Changed to bcrypt.hash
+  const hashedPassword = await bcrypt.hash(password, 10); 
 
   try {
-    await db.insert(users).values({  // Changed DataView to db
+    await db.insert(users).values({  
       fullName,
       email,
       universityID,
@@ -51,8 +53,10 @@ export const signUp = async (params: AuthCredentials) => {
       universityCard,
     });
 
+    await signInWithCredentials({email, password});
     return { success: true };
-  } catch (error) {
+  } 
+  catch (error) {
     console.log(error, 'Signup error');
     return { success: false, error: "Signup error" };
   }
