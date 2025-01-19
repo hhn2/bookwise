@@ -44,28 +44,28 @@ const AuthForm = <T extends FieldValues>  ({
     });
 
     const handleSubmit: SubmitHandler<T> = async (data) => {
-      console.log('Form submitted:', data); 
-      const result = await onSubmit(data);
+  console.log('Form Data being submitted:', data);  // This logs the form data
+  const result = await onSubmit(data);
 
-      if (result.success){
-        toast({
-          title: 'Success',
-          description: isSignIn
-          ? "You have successfully signed in."
-          : "You have successfully signed up.",
-        });
+  console.log('API Response:', result);  // This logs the response from your API
 
-        router.push("/");
-      }
-      else{
-        toast({
-  title: `Error ${isSignIn ? "signing in" : "signing up"}`,
-  description: result.error ?? "An error occurred.",
-  variant: "destructive", 
-});
+  if (result.success) {
+    toast({
+      title: 'Success',
+      description: isSignIn
+        ? "You have successfully signed in."
+        : "You have successfully signed up.",
+    });
+    router.push("/");
+  } else {
+    toast({
+      title: `Error ${isSignIn ? "signing in" : "signing up"}`,
+      description: result.error ?? "An error occurred.",
+      variant: "destructive",
+    });
+  }
+};
 
-      }
-    };
 
     return (
     <div className = "flex flex-col gap-4">
