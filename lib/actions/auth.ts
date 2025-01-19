@@ -65,12 +65,26 @@ export const signUp = async (params: AuthCredentials) => {
       universityCard,
     });
 
-    await workflowClient.trigger({
-      url: `${config.env.prodApiEndpoint}/api/workflows/onboarding`,
-      body:{
-        email, fullName,
-      },
-    });
+    try {
+  const workflowResponse = await workflowClient.trigger({
+    url: `${config.env.prodApiEndpoint}/api/workflows/onboarding`,
+    body: { email, fullName },
+  });
+
+  console.log('Workflow Trigger Response:', workflowResponse);  // Log the full response
+
+  // Inspect what the response contains, and adapt your code
+  if (workflowResponse.workflowRunId) {
+    console.log('Workflow Run ID:', workflowResponse.workflowRunId);
+  } else {
+    console.error('Unexpected workflow response:', workflowResponse);
+    return { success: false, error: 'Unexpected workflow response format.' };
+  }
+} catch (error) {
+  console.error('Error triggering workflow:', error);
+  return { success: false, error: 'Error triggering onboarding workflow.' };
+}
+
 
     await signInWithCredentials({email, password});
     return { success: true };
