@@ -26,7 +26,7 @@ interface Props extends Partial<Book> {
 
 const BookForm =  ({ 
     type, 
-    ...book,
+    ...book
 }: Props) => {
       const router = useRouter();
     
