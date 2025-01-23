@@ -19,6 +19,7 @@ import { useRouter } from 'next/navigation';
 import { bookSchema } from '@/lib/validations';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
+import FileUpload from '@/components/FileUpload';
 
 interface Props extends Partial<Book> {
     type?: 'create' | 'update'
@@ -176,12 +177,18 @@ const onSubmit = async(values: z.infer<typeof bookSchema>) => {};
                 </FormLabel>
               <FormControl>
 
-                {/*image upload to be implemented */}
+              <FileUpload 
+              type="image" 
+              accept="image/*"
+              placeholder="upload a book cover" 
+              folder="books/covers" variant="light"
+              onFileChange={field.onChange}
+              value={field.value} />
               </FormControl>
               
               <FormMessage />
             </FormItem>
-          )}
+          )} 
         />
 
           <FormField
@@ -232,7 +239,14 @@ const onSubmit = async(values: z.infer<typeof bookSchema>) => {};
                 </FormLabel>
               <FormControl>
 
-                {/*video upload to be implemented */}
+
+              <FileUpload 
+              type="video" 
+              accept="video/*"
+              placeholder="upload a book trailer" 
+              folder="books/trailers" variant="light"
+              onFileChange={field.onChange}
+              value={field.value} />
               </FormControl>
               
               <FormMessage />
