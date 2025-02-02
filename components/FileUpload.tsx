@@ -46,7 +46,7 @@ interface Props {
 const FileUpload = ({
     type, accept, placeholder, folder, variant,
     onFileChange, value}: Props) => {
-    const ikUploadRef = useRef(null);
+    const ikUploadRef = useRef<HTMLInputElement | null>(null);
     const [file, setFile] = useState<{ filePath: string | null } | null>({ filePath: value ?? null,});
     const [progress, setProgress]= useState(0);
 
