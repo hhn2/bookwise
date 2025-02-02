@@ -7,13 +7,9 @@ import { auth } from "@/auth";
 import BookOverview from "@/components/BookOverview";
 import BookVideo from "@/components/BookVideo";
 
-const Page = async ({ params }: { params: { id: string } }) => {
-  console.log("Fetching book with ID:", params.id); // Debugging log
-  const id = params.id;
-
-
+const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const id = (await params).id;
   const session = await auth();
-
 
   // Fetch data based on id
   const [bookDetails] = await db
@@ -22,7 +18,6 @@ const Page = async ({ params }: { params: { id: string } }) => {
     .where(eq(books.id, id))
     .limit(1);
 
-    console.log("Database result for ID", id, ":", bookDetails);
   if (!bookDetails) redirect("/404");
 
   return (
