@@ -3,7 +3,14 @@ import Image from "next/image";
 import { signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 
-const Header = () => {
+// Assuming you are using next-auth, import the Session type if needed
+import { Session } from "next-auth";  // Adjust the import according to your setup
+
+interface HeaderProps {
+  session: Session;  // Define the session prop type
+}
+
+const Header: React.FC<HeaderProps> = ({ session }) => {
   return (
     <header className="my-10 flex justify-between gap-5">
       <Link href="/">
