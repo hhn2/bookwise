@@ -18,13 +18,13 @@ interface Props{
     className?: string;
     variant?: BookCoverVariant;
     coverColor: string;
-    coverImage: string;
+    coverUrl: string;
 }
 const BookCover = ({ 
     className, 
     variant = 'regular', 
     coverColor = '#012B48', 
-    coverImage = 'https://placehold.co/400x600.png',
+    coverUrl = 'https://placehold.co/400x600.png',
 }: Props) => {
   return (
     <div className={cn (
@@ -36,7 +36,7 @@ const BookCover = ({
          
          <div className="absolute z-10" style={{left: '12&', width:"87.5%", height: "88%"}}>
             <IKImage 
-            path={coverImage} 
+            path={coverUrl} 
             urlEndpoint={config.env.imagekit.urlEndpoint}  
             alt="Book cover" 
             fill className="rounded-sm object-fill"
